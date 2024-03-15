@@ -12,6 +12,12 @@ fn main() {
     }
 
     let brightness: f64 = args[1].parse::<f64>().unwrap();
+
+    if brightness < 0.0 || brightness > 1.0 {
+        println!("Error: Brightness value must be between 0.0 and 1.0");
+        return;
+    }
+
     let gamma: f64 = calculate_gamma(brightness);
 
     change_output(brightness, gamma);
@@ -27,7 +33,8 @@ fn calculate_gamma(brightness: f64) -> f64 {
 
     let gamma = m * E.powf(brightness) + c;
 
-    println!("Gamma: {}", gamma);
+    #[cfg(debug_assertions)]
+    println!("[DEBUG] Gamma: {}", gamma);
 
     return gamma;
 }
