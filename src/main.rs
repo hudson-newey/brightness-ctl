@@ -33,10 +33,12 @@ fn calculate_gamma(brightness: f64) -> f64 {
 
     let gamma = m * E.powf(brightness) + c;
 
-    #[cfg(debug_assertions)]
-    println!("[DEBUG] Gamma: {}", gamma);
+    let clamped_gamma = gamma.clamp(0.6, 1.0);
 
-    return gamma;
+    #[cfg(debug_assertions)]
+    println!("[DEBUG] Gamma: {}", clamped_gamma);
+
+    return clamped_gamma;
 }
 
 fn change_output(brightness: f64, gamma: f64) {
